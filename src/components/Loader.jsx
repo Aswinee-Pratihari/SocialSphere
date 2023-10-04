@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import { Logo } from "./index";
 const Loader = () => {
   return (
     <section className="h-screen flex justify-center items-center">
-      <img src={logo} alt="" className="w-20 h-20" />
+      <Logo className="w-20 h-20" />
     </section>
   );
 };

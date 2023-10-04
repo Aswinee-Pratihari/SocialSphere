@@ -8,6 +8,7 @@ import authService from "./appwrite/auth";
 import { useDispatch } from "react-redux";
 import { logOut, login } from "./redux/authSlice";
 import { Outlet } from "react-router-dom";
+import SideBar from "./components/Sidebar";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -41,6 +42,7 @@ function App() {
         <Loader />
       ) : (
         <>
+          <SideBar />
           <Outlet />
         </>
       )}
