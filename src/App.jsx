@@ -7,7 +7,7 @@ import conf from "./conf/conf";
 function App() {
   const [count, setCount] = useState(0);
 
-  return <></>;
+  return <>hell</>;
 }
 
 export default App;
