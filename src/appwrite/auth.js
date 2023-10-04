@@ -43,6 +43,7 @@ export class AuthServices {
       return await this.account.createEmailSession(email, password);
     } catch (error) {
       console.log("logInError : ", error);
+      throw error;
     }
   }
 

@@ -13,6 +13,7 @@ import SideBar from "./components/Sidebar";
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
         const user = await authService.getUser();
         console.log(user);
         if (user) {
+          setUser(user);
           dispatch(login(user));
           navigate("/");
         } else {
@@ -42,8 +44,16 @@ function App() {
         <Loader />
       ) : (
         <>
-          <SideBar />
-          <Outlet />
+          <div className="flex  justify-center">
+            {user == null && (
+              <div className="flex-1">
+                <SideBar />
+              </div>
+            )}
+            <div className="flex-[4]">
+              <Outlet />
+            </div>
+          </div>
         </>
       )}
     </>
