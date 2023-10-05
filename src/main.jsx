@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AuthLayout from "./components/AuthLayout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +17,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <AuthLayout authentication={true}>
+            <Home />
+          </AuthLayout>
+        ),
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        ),
       },
       {
         path: "/signUp",
-        element: <SignUp />,
+        element: (
+          <AuthLayout authentication={false}>
+            <SignUp />
+          </AuthLayout>
+        ),
       },
     ],
   },

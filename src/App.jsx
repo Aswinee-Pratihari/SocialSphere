@@ -5,23 +5,25 @@ import "./App.css";
 import conf from "./conf/conf";
 import Loader from "./components/Loader";
 import authService from "./appwrite/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOut, login } from "./redux/authSlice";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar";
+import AuthLayout from "./components/AuthLayout";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const authStatus = useSelector((state) => state.auth.status);
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const user = await authService.getUser();
         console.log(user);
-        if (user) {
+        if (user != null) {
           setUser(user);
           dispatch(login(user));
           navigate("/");
@@ -36,7 +38,7 @@ function App() {
     };
 
     fetchUser();
-  }, []);
+  }, [navigate, user]);
 
   return (
     <>
@@ -45,7 +47,7 @@ function App() {
       ) : (
         <>
           <div className="flex  justify-center">
-            {user == null && (
+            {authStatus && (
               <div className="flex-1">
                 <SideBar />
               </div>
