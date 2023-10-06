@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { set } from "react-hook-form";
 const PostCard = ({ post }) => {
-  const userId = useSelector((state) => state.auth.user.$id);
+  const userId = useSelector((state) => state?.auth?.user?.$id);
   const isAuthor = post && userId ? userId === post.userId : false;
   const handleDelete = async () => {
     await database.deletePost(post.$id);
@@ -30,7 +30,7 @@ const PostCard = ({ post }) => {
               alt=""
             />
             <div>
-              <h5 className="text-sm font-semibold">{/* {post?.} */}</h5>
+              <h5 className="text-sm font-semibold">{post?.users?.name}</h5>
               <p className="text-sm font-normal">
                 {dayjs(post?.$createdAt).format("MMM D, YYYY")}
                 {/* 2/3/2023 */}

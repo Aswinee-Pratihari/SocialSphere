@@ -34,6 +34,7 @@ export class AuthServices {
       }
     } catch (error) {
       console.log("createAccountError : ", error);
+      throw error;
     }
   }
 

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { login as authLogin } from "../redux/authSlice";
 import { Input, Logo } from "./index";
+import database from "../appwrite/db";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -19,10 +20,14 @@ const SignUp = () => {
       if (session) {
         const userData = await authService.getUser();
         if (userData) {
+          await database.createUser({
+            name: userData.name,
+            email: userData.email,
+            id: userData.$id,
+          });
           dispatch(authLogin(userData));
           navigate("/");
         }
-      } else {
       }
     } catch (error) {
       setError(error.message);

@@ -23,6 +23,7 @@ export class Database {
           caption,
           Image,
           userId,
+          users: userId,
         }
       );
     } catch (error) {
@@ -86,6 +87,23 @@ export class Database {
       );
     } catch (error) {
       console.log("getAllPostError", error);
+      return null;
+    }
+  }
+
+  async createUser({ name, email, id }) {
+    try {
+      // console.log(userData);
+      return await this.databases.createDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_user_collection_id,
+        // ID.unique(),
+        id,
+        { name, email }
+      );
+    } catch (error) {
+      console.log("createUserError", error);
+      throw error;
       return null;
     }
   }
