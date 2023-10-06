@@ -44,7 +44,7 @@ const SideBar = () => {
               <Link
                 to={item?.slug}
                 className="flex items-center gap-3 hover:bg-orange-500 w-full p-3 rounded-lg hover:shadow-lg cursor-pointer sm:justify-start justify-center"
-                key={item?.slug}
+                key={item?.name}
               >
                 {item?.icon}
                 <h4 className="block max-md:hidden">{item?.name}</h4>

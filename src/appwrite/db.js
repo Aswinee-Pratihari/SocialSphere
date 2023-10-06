@@ -1,4 +1,4 @@
-import { Client, Databases } from "appwrite";
+import { Client, Databases, ID, Query } from "appwrite";
 import conf from "../conf/conf";
 
 export class Database {
@@ -13,12 +13,12 @@ export class Database {
     this.databases = new Databases(this.client);
   }
 
-  async createPost({ caption, slug, Image, userId }) {
+  async createPost({ caption, Image, userId }) {
     try {
       return await this.databases.createDocument(
         conf.appwrite_database_id,
         conf.appwrite_post_collection_id,
-        slug,
+        ID.unique(),
         {
           caption,
           Image,
@@ -62,12 +62,12 @@ export class Database {
     }
   }
 
-  async deletePost(slug) {
+  async deletePost(Image) {
     try {
       await this.databases.deleteDocument(
         conf.appwrite_database_id,
         conf.appwrite_post_collection_id,
-        slug
+        Image
       );
 
       return true;
@@ -81,7 +81,8 @@ export class Database {
     try {
       return await this.databases.listDocuments(
         conf.appwrite_database_id,
-        conf.appwrite_post_collection_id
+        conf.appwrite_post_collection_id,
+        [Query.orderDesc("$createdAt")]
       );
     } catch (error) {
       console.log("getAllPostError", error);

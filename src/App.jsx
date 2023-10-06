@@ -22,7 +22,7 @@ function App() {
     const fetchUser = async () => {
       try {
         const user = await authService.getUser();
-        console.log(user);
+        // console.log(user);
         if (user != null) {
           setUser(user);
           dispatch(login(user));
@@ -38,7 +38,7 @@ function App() {
     };
 
     fetchUser();
-  }, [navigate, user]);
+  }, []);
 
   return (
     <>

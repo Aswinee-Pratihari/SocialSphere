@@ -5,9 +5,10 @@ import LogOutBtn from "./LogOutBtn";
 import Login from "./Login";
 import Logo from "./Logo";
 import Main from "./Main";
+import Modal from "./Modal";
 import PostCard from "./PostCard";
 import SignUp from "./SignUp";
-SignUp;
+
 export {
   SignUp,
   Container,
@@ -18,4 +19,5 @@ export {
   Main,
   PostCard,
   Login,
+  Modal,
 };

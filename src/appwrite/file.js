@@ -35,8 +35,8 @@ export class File {
     }
   }
 
-  filePreview(fileId) {
-    return this.bucket.deleteFile(conf.appwrite_bucket_id, fileId);
+  filePreview(Image) {
+    return this.bucket.getFilePreview(conf.appwrite_bucket_id, Image);
   }
 }
 

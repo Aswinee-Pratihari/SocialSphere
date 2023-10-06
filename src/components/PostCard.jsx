@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img from "../assets/logo.png";
 import { HandThumbUpIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import photos from "../appwrite/file";
-const PostCard = ({ $id, caption, Image }) => {
+import database from "../appwrite/db";
+import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { set } from "react-hook-form";
+const PostCard = ({ post }) => {
+  const userId = useSelector((state) => state.auth.user.$id);
+  const isAuthor = post && userId ? userId === post.userId : false;
+  const handleDelete = async () => {
+    await database.deletePost(post.$id);
+    alert("deleted");
+    navigate("/");
+  };
   return (
     <>
       <div className="p-3 rounded-lg bg-white">
@@ -19,44 +30,33 @@ const PostCard = ({ $id, caption, Image }) => {
               alt=""
             />
             <div>
-              <h5 className="text-sm font-semibold">
-                {/* {userinfo?.userName} */}
-                username
-              </h5>
+              <h5 className="text-sm font-semibold">{/* {post?.} */}</h5>
               <p className="text-sm font-normal">
-                {/* {dayjs(post?.createdAt).format("MMM D, YYYY")} */}
-                2/3/2023
+                {dayjs(post?.$createdAt).format("MMM D, YYYY")}
+                {/* 2/3/2023 */}
               </p>
             </div>
           </Link>
 
-          {/* {user?._id == userinfo?._id && (
+          {isAuthor && (
             <div>
               <TrashIcon
                 className="w-6 h-6 cursor-pointer"
-                // onClick={handleDelete}
+                onClick={handleDelete}
               />
             </div>
-          )} */}
-          <div>
-            <TrashIcon
-              className="w-6 h-6 cursor-pointer"
-              // onClick={handleDelete}
-            />
-          </div>
+          )}
         </div>
 
         {/* content of post */}
         <div className="middle my-3 space-y-5">
-          <p className="text-sm font-medium ">
-            {/* {post?.content} */}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero,
-            tempora!
-          </p>
+          {post?.caption && (
+            <p className="text-sm font-medium ">{post?.caption}</p>
+          )}
           <div>
             <img
               // src={post?.img}
-              src={photos.filePreview(Image)}
+              src={photos.filePreview(post.Image)}
               className="max-w max-h-[300px]  rounded-lg object-cover mx-auto"
               alt=""
             />
