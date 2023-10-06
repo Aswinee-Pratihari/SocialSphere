@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import img from "../assets/logo.png";
 import { HandThumbUpIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import photos from "../appwrite/file";
 import database from "../appwrite/db";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { set } from "react-hook-form";
-const PostCard = ({ post }) => {
+import Avatar from "react-avatar";
+const PostCard = ({ post, user }) => {
+  const navigate = useNavigate();
+
   const userId = useSelector((state) => state?.auth?.user?.$id);
   const isAuthor = post && userId ? userId === post.userId : false;
   const handleDelete = async () => {
@@ -24,13 +27,22 @@ const PostCard = ({ post }) => {
             to={`/`}
             className="top flex items-center gap-3"
           >
-            <img
+            {/* <img
               src="https://online-communities.demos.buddyboss.com/wp-content/sandbox211082-uploads/avatars/2/621e2ce4392dd-bpthumb.png"
               className="w-10 h-10 rounded-full object-cover"
               alt=""
+            /> */}
+            <Avatar
+              name={post?.users?.name || user?.name}
+              size="40"
+              textSizeRatio={0.76}
+              textMarginRatio={0.3}
+              round={true}
             />
             <div>
-              <h5 className="text-sm font-semibold">{post?.users?.name}</h5>
+              <h5 className="text-sm font-semibold">
+                {post?.users?.name || user?.name}
+              </h5>
               <p className="text-sm font-normal">
                 {dayjs(post?.$createdAt).format("MMM D, YYYY")}
                 {/* 2/3/2023 */}

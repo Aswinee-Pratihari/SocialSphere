@@ -8,8 +8,10 @@ import Main from "./Main";
 import Modal from "./Modal";
 import PostCard from "./PostCard";
 import SignUp from "./SignUp";
-
+import UserCard from "./UserCard";
+UserCard;
 export {
+  UserCard,
   SignUp,
   Container,
   Loader,

@@ -41,6 +41,7 @@ export class Database {
       );
     } catch (error) {
       console.log("getSinglePostError", error);
+      throw error;
       return null;
     }
   }
@@ -103,6 +104,40 @@ export class Database {
       );
     } catch (error) {
       console.log("createUserError", error);
+      throw error;
+      return null;
+    }
+  }
+
+  async getAllUsers(query) {
+    try {
+      if (query?.length > 0) {
+        return await this.databases.listDocuments(
+          conf.appwrite_database_id,
+          conf.appwrite_user_collection_id,
+          [Query.search("name", query)]
+        );
+      } else {
+        return await this.databases.listDocuments(
+          conf.appwrite_database_id,
+          conf.appwrite_user_collection_id
+        );
+      }
+    } catch (error) {
+      console.log("getAllUsersError", error);
+      throw error;
+    }
+  }
+
+  async getSingleUser(userId) {
+    try {
+      return await this.databases.getDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_user_collection_id,
+        userId
+      );
+    } catch (error) {
+      console.log("getSingleUserError", error);
       throw error;
       return null;
     }

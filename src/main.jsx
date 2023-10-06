@@ -4,9 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
-import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import SignUp from "./pages/SignUp.jsx";
+import { Home, Search, SignUp, Login, Profile } from "./pages/index.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AuthLayout from "./components/AuthLayout.jsx";
 
@@ -36,6 +34,22 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication={false}>
             <SignUp />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/search",
+        element: (
+          <AuthLayout authentication={true}>
+            <Search />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/profile/:id",
+        element: (
+          <AuthLayout authentication={true}>
+            <Profile />
           </AuthLayout>
         ),
       },

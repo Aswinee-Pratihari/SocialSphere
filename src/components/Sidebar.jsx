@@ -10,7 +10,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { LogOutBtn } from "./index";
 const SideBar = () => {
-  const authStatus = useSelector((state) => state.auth.status);
+  const userDetails = useSelector((state) => state.auth);
+  const authStatus = userDetails.status;
+  const userId = userDetails?.user?.$id;
 
   const navItems = [
     {
@@ -20,7 +22,7 @@ const SideBar = () => {
     },
     {
       icon: <MagnifyingGlassIcon className="w-6 h-6" />,
-      slug: "/",
+      slug: "/search",
       name: "Search",
     },
     {
@@ -30,7 +32,7 @@ const SideBar = () => {
     },
     {
       icon: <UserIcon className="w-6 h-6" />,
-      slug: "/",
+      slug: `/profile/${userId}`,
       name: "Profile",
     },
   ];
