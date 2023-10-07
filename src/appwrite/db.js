@@ -142,6 +142,23 @@ export class Database {
       return null;
     }
   }
+
+  async followUser(id, followers) {
+    try {
+      return await this.databases.updateDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_user_collection_id,
+        id,
+        {
+          followers,
+        }
+      );
+    } catch (error) {
+      console.log("followUserError", error);
+      throw error;
+      return null;
+    }
+  }
 }
 
 const database = new Database();

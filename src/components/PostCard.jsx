@@ -77,7 +77,7 @@ const PostCard = ({ post, user }) => {
 
         {/* buttons for like and comment */}
         <div className="flex gap-4 items-center">
-          <span>20 Likes</span>
+          <span>{post?.likes?.length} Likes</span>
           <div className="flex items-center gap-2">
             <HandThumbUpIcon className="w-6 h-6  cursor-pointer" />
             {/* <span>{post.likes.includes(user?._id) ? "Liked" : "Like"}</span> */}

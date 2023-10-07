@@ -12,6 +12,7 @@ const Search = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const data = await database.getAllUsers(query);
+      console.log(data.documents);
       setUsers(data.documents);
     };
     fetchUsers();
@@ -33,6 +34,8 @@ const Search = () => {
                 email={user.email}
                 id={user.$id}
                 key={user?.$id}
+                followers={user?.followers}
+                following={user?.following}
               />
             );
           })}
