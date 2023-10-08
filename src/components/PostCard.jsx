@@ -32,12 +32,10 @@ const PostCard = ({ post, user }) => {
               className="w-10 h-10 rounded-full object-cover"
               alt=""
             /> */}
-            <Avatar
-              name={post?.users?.name || user?.name}
-              size="40"
-              textSizeRatio={0.76}
-              textMarginRatio={0.3}
-              round={true}
+            <img
+              src={database.getAvatar(post?.users?.name)?.href}
+              alt=""
+              className="w-10 h-10 rounded-full"
             />
             <div>
               <h5 className="text-sm font-semibold">

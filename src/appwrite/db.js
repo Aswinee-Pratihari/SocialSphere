@@ -1,16 +1,18 @@
-import { Client, Databases, ID, Query } from "appwrite";
+import { Avatars, Client, Databases, ID, Query } from "appwrite";
 import conf from "../conf/conf";
 
 export class Database {
   client = new Client();
 
   databases;
+  avatars;
   constructor() {
     this.client
       .setEndpoint(conf.appwrite_url) // Your API Endpoint
       .setProject(conf.appwrite_project_id);
 
     this.databases = new Databases(this.client);
+    this.avatars = new Avatars(this.client);
   }
 
   async createPost({ caption, Image, userId }) {
@@ -145,6 +147,7 @@ export class Database {
 
   async followUser(id, followers) {
     try {
+      console.log(followers);
       return await this.databases.updateDocument(
         conf.appwrite_database_id,
         conf.appwrite_user_collection_id,
@@ -157,6 +160,32 @@ export class Database {
       console.log("followUserError", error);
       throw error;
       return null;
+    }
+  }
+
+  async followingUser(id, following) {
+    try {
+      console.log(following);
+      return await this.databases.updateDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_user_collection_id,
+        id,
+        {
+          following,
+        }
+      );
+    } catch (error) {
+      console.log("followUserError", error);
+      throw error;
+      return null;
+    }
+  }
+
+  getAvatar(name) {
+    try {
+      return this.avatars.getInitials(name);
+    } catch (error) {
+      throw error;
     }
   }
 }

@@ -12,7 +12,6 @@ const Main = () => {
     const fetchPost = async () => {
       const res = await database.getAllPost();
       setPost(res?.documents);
-      // console.log(res.documents);
     };
     fetchPost();
   }, []);
@@ -25,11 +24,13 @@ const Main = () => {
           setOpenModal(true);
         }}
       >
+        {/* <Avatars/> */}
         <img
-          src="https://online-communities.demos.buddyboss.com/wp-content/sandbox211082-uploads/avatars/2/621e2ce4392dd-bpthumb.png"
-          className="w-10 h-10 rounded-full object-cover"
+          src={database.getAvatar(user?.name)?.href}
           alt=""
+          className="w-10 h-10 rounded-full"
         />
+
         <span className="text-sm font-semibold text-gray-400">
           {`Share Whats in your mind ${user?.name}...`}
         </span>

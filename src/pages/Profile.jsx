@@ -44,11 +44,11 @@ const Profile = () => {
               </span>
               <div className="flex items-center gap-4">
                 <p className="text-sm font-normal">
-                  {/* <span className="font-bold">{user?.followers.length}</span> */}
+                  <span className="font-bold">{user?.followers.length}</span>
                   Followers
                 </p>
                 <p className="text-sm font-normal">
-                  {/* <span className="font-bold">{user?.following.length}</span> */}
+                  <span className="font-bold">{user?.following.length}</span>
                   Following
                 </p>
               </div>
