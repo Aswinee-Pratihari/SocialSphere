@@ -9,7 +9,7 @@ import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
 
 const Modal = ({ openModal }) => {
   const [error, setError] = useState("");
-  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
@@ -28,6 +28,7 @@ const Modal = ({ openModal }) => {
   };
   const submit = async (data) => {
     // console.log(id);
+    setLoading(true);
     const file = await photos.uploadFile(data.Image[0]);
     if (file) {
       setError("");
@@ -41,6 +42,7 @@ const Modal = ({ openModal }) => {
         if (dbPost) {
           navigate("/");
           openModal(false);
+          setLoading(false);
         }
       } catch (error) {
         setError(error.message);
@@ -86,8 +88,12 @@ const Modal = ({ openModal }) => {
               </label> */}
             <Input placeholder="Add your caption" {...register("caption")} />
 
-            <button className="bg-orange-600 px-5 py-2 text-lg font-semibold mt-4 w-1/2  rounded-lg shadow-lg text-white inline-block">
-              Post
+            <button
+              className={`${
+                loading && "cursor-not-allowed bg-gray-400"
+              } bg-orange-600 px-5 py-2  text-lg font-semibold mt-4 w-1/2  rounded-lg shadow-lg text-white inline-block`}
+            >
+              {loading ? "Posting" : "Post"}
             </button>
           </div>
         </form>

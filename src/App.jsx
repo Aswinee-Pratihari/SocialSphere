@@ -11,6 +11,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar";
 import AuthLayout from "./components/AuthLayout";
 import BottomBar from "./components/BottomBar";
+import { ToastBar, Toaster } from "react-hot-toast";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -60,6 +61,9 @@ function App() {
               </>
             )}
             <div className="flex-1 sm:flex-[4]">
+              <Toaster
+                position="top-right" // Used to adapt the animation
+              />
               <Outlet />
             </div>
           </div>

@@ -45,7 +45,7 @@ const UserCard = ({ name, email, id, followers }) => {
   };
 
   return (
-    <div className="flex  items-center justify-between w-full">
+    <div className="flex   items-center justify-between  ">
       <Link to={`/profile/${id}`}>
         <>
           <div className="flex gap-4 items-center">
@@ -56,7 +56,9 @@ const UserCard = ({ name, email, id, followers }) => {
             />
             <div className="details ">
               <h2 className="text- font-semibold ">{name}</h2>
-              <p className="text-base font-semibold text-gray-500">{email}</p>
+              <p className=" font-semibold text-gray-500 whitespace-normal w-full text-sm">
+                {email}
+              </p>
             </div>
           </div>
         </>
@@ -66,7 +68,7 @@ const UserCard = ({ name, email, id, followers }) => {
           {isFollowing ? (
             <>
               <button
-                className="text-lg font-semibold text-white bg-gray-700 px-3 py-1 rounded-md shadow-md"
+                className="text-sm sm:text-lg font-semibold text-white bg-gray-700 px-3 py-1 rounded-md shadow-md"
                 onClick={handlefollow}
               >
                 Following
@@ -74,7 +76,7 @@ const UserCard = ({ name, email, id, followers }) => {
             </>
           ) : (
             <button
-              className="text-lg font-semibold text-white bg-orange-500 px-3 py-1 rounded-md shadow-md"
+              className="text-sm sm:text-lg font-semibold text-white bg-orange-500 px-3 py-1 rounded-md shadow-md"
               onClick={handlefollow}
             >
               Follow
@@ -82,7 +84,7 @@ const UserCard = ({ name, email, id, followers }) => {
           )}
         </>
       ) : (
-        <button className="text-lg font-semibold text-white bg-gray-500 px-3 py-1 rounded-md shadow-md">
+        <button className="text-sm sm:text-lg font-semibold text-white bg-gray-500 px-3 py-1 rounded-md shadow-md">
           Self Profile
         </button>
       )}
