@@ -24,12 +24,12 @@ const PostCard = ({ post, name }) => {
         setLikePost(true);
         toast.success("Post Liked");
       } else {
-        const likeArray = post.likes.filter((id) => id != userId);
+        post.likes = post.likes.filter((id) => id != userId);
         setIsLiked(false);
         setLikePost(false);
         toast.success("Post disliked");
 
-        await database.LikePost(post.$id, likeArray);
+        await database.LikePost(post.$id, post.likes);
       }
     } catch (error) {
       toast.error(error.message) || toast.error(error);
