@@ -7,18 +7,19 @@ import database from "../appwrite/db";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import Comment from "./Comment";
 const PostCard = ({ post, name }) => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state?.auth?.user?.$id);
   const isAuthor = post && userId ? userId === post.userId : false;
   const [isLiked, setIsLiked] = useState(post.likes.indexOf(userId) !== -1);
   const [likePost, setLikePost] = useState(true);
-
+  const [openComment, setOpenComment] = useState(false);
   const handleLike = async () => {
     try {
       if (post.likes.indexOf(userId) == -1) {
         post.likes.push(userId);
-        // await database.LikePost(post.$id, post.likes);
+        await database.LikePost(post.$id, post.likes);
         setIsLiked(true);
         setLikePost(true);
         toast.success("Post Liked");
@@ -28,7 +29,7 @@ const PostCard = ({ post, name }) => {
         setLikePost(false);
         toast.success("Post disliked");
 
-        // await database.LikePost(post.$id, likeArray);
+        await database.LikePost(post.$id, likeArray);
       }
     } catch (error) {
       toast.error(error.message) || toast.error(error);
@@ -116,7 +117,10 @@ const PostCard = ({ post, name }) => {
               </>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            onClick={() => setOpenComment(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -134,6 +138,14 @@ const PostCard = ({ post, name }) => {
 
             <span>Comment</span>
           </div>
+
+          {openComment && (
+            <Comment
+              postImg={photos.filePreview(post.Image)}
+              caption={post?.caption}
+              openCommentBox={setOpenComment}
+            />
+          )}
         </div>
       </div>
     </>
