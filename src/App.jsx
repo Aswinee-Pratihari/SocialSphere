@@ -60,7 +60,7 @@ function App() {
                 </div>
               </>
             )}
-            <div className="flex-1 sm:flex-[4]">
+            <div className="pb-10 sm:pb-0 sm:flex-[4]">
               <Toaster
                 position="top-right" // Used to adapt the animation
               />

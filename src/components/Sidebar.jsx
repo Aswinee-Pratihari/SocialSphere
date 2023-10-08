@@ -27,7 +27,7 @@ const SideBar = () => {
     },
     {
       icon: <HandThumbUpIcon className="w-6 h-6" />,
-      slug: "/",
+      slug: "/likedPost",
       name: "Liked Post",
     },
     {

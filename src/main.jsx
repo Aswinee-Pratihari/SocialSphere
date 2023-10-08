@@ -4,7 +4,14 @@ import App from "./App.jsx";
 import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
-import { Home, Search, SignUp, Login, Profile } from "./pages/index.js";
+import {
+  Home,
+  Search,
+  SignUp,
+  Login,
+  Profile,
+  LikedPostPage,
+} from "./pages/index.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AuthLayout from "./components/AuthLayout.jsx";
 
@@ -50,6 +57,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication={true}>
             <Profile />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/likedPost",
+        element: (
+          <AuthLayout authentication={true}>
+            <LikedPostPage />
           </AuthLayout>
         ),
       },

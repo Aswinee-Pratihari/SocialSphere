@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { PostCard } from "../components";
 import { useParams } from "react-router-dom";
 import database from "../appwrite/db";
-import Avatar from "react-avatar";
 
 const Profile = () => {
   const { id } = useParams();
@@ -17,6 +16,7 @@ const Profile = () => {
     };
     fetchUser();
   }, [id]);
+
   return (
     <section className="p-3 rounded-lg  flex">
       <div className="flex-[3]">
@@ -31,12 +31,10 @@ const Profile = () => {
             </div>
             <div className="flex justify-center items-center flex-col ">
               {/* profile image */}
-              <Avatar
-                name={user?.name}
-                size="70"
-                textSizeRatio={0.76}
-                // textMarginRatio={0.3}
-                round={true}
+              <img
+                src={database.getAvatar(user?.name)?.href}
+                alt=""
+                className="w-20 h-20 rounded-full"
               />
               <h4 className="text-lg font-bold tracking-wide">{user?.name}</h4>
               <span className="text-sm font-light ">
@@ -57,7 +55,7 @@ const Profile = () => {
 
           {user?.posts?.length > 0 ? (
             user?.posts?.map((post) => {
-              return <PostCard post={post} key={post?.$id} user={user} />;
+              return <PostCard post={post} key={post?.$id} name={user?.name} />;
             })
           ) : (
             <div className="text-xl text-center text-slate-500 font-semibold">

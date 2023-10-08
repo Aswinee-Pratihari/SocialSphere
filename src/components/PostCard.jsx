@@ -7,26 +7,28 @@ import database from "../appwrite/db";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-const PostCard = ({ post, user }) => {
+const PostCard = ({ post, name }) => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state?.auth?.user?.$id);
   const isAuthor = post && userId ? userId === post.userId : false;
   const [isLiked, setIsLiked] = useState(post.likes.indexOf(userId) !== -1);
+  const [likePost, setLikePost] = useState(true);
 
   const handleLike = async () => {
-    // console.log(post);
     try {
       if (post.likes.indexOf(userId) == -1) {
         post.likes.push(userId);
-        await database.LikePost(post.$id, post.likes);
+        // await database.LikePost(post.$id, post.likes);
         setIsLiked(true);
+        setLikePost(true);
         toast.success("Post Liked");
       } else {
         const likeArray = post.likes.filter((id) => id != userId);
         setIsLiked(false);
+        setLikePost(false);
         toast.success("Post disliked");
-        console.log(likeArray);
-        await database.LikePost(post.$id, likeArray);
+
+        // await database.LikePost(post.$id, likeArray);
       }
     } catch (error) {
       toast.error(error.message) || toast.error(error);
@@ -38,13 +40,13 @@ const PostCard = ({ post, user }) => {
     // alert("deleted");
     navigate("/");
   };
+
   return (
     <>
-      <div className="p-3 rounded-lg bg-white">
+      <div className="p-3 rounded-lg bg-white ">
         <div className="flex justify-between items-center">
           <Link
-            // to={`/profile/${post?.userId}`}
-            to={`/`}
+            to={`/profile/${post?.userId}`}
             className="top flex items-center gap-3"
           >
             <img
@@ -54,7 +56,7 @@ const PostCard = ({ post, user }) => {
             />
             <div>
               <h5 className="text-sm font-semibold">
-                {post?.users?.name || user?.name}
+                {post?.users?.name || name}
               </h5>
               <p className="text-sm font-normal">
                 {dayjs(post?.$createdAt).format("MMM D, YYYY")}
@@ -90,7 +92,9 @@ const PostCard = ({ post, user }) => {
 
         {/* buttons for like and comment */}
         <div className="flex gap-4 items-center">
-          <span>{post?.likes?.length + 1} Likes</span>
+          <span>
+            {likePost ? post?.likes?.length : post?.likes?.length - 1} Likes
+          </span>
           <div className="flex items-center gap-2">
             {isLiked ? (
               <>
