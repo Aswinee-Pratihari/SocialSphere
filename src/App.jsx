@@ -10,6 +10,7 @@ import { logOut, login } from "./redux/authSlice";
 import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar";
 import AuthLayout from "./components/AuthLayout";
+import BottomBar from "./components/BottomBar";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -48,11 +49,17 @@ function App() {
         <>
           <div className="flex  justify-center">
             {authStatus && (
-              <div className="flex-1">
-                <SideBar />
-              </div>
+              <>
+                <div className="flex-1 sm:block hidden">
+                  <SideBar />
+                </div>
+
+                <div className="fixed bg-gray-200 rounded-md shadow-md bottom-0  sm:hidden block w-full">
+                  <BottomBar />
+                </div>
+              </>
             )}
-            <div className="flex-[4]">
+            <div className="flex-1 sm:flex-[4]">
               <Outlet />
             </div>
           </div>
