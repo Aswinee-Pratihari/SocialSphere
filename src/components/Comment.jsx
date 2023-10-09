@@ -27,7 +27,7 @@ const Comment = ({
     // console.log(data);
     try {
       if (data.comment.length > 0) {
-        await database.commentOnPost(postId, data);
+        await database.commentOnPost(postId, { ...data });
       } else {
         toast.error("Cant put an empty comment");
       }

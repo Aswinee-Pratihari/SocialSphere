@@ -83,18 +83,18 @@ export class Database {
     }
   }
 
-  async commentOnPost(postId, comments) {
+  async commentOnPost(postId, { userId, name, comment }) {
+    console.log(userId, name, comment);
     try {
       return await this.databases.updateDocument(
         conf.appwrite_database_id,
         conf.appwrite_post_collection_id,
         postId,
-        {
-          comments,
-        }
+        "comments",
+        [userId, name, comment]
       );
     } catch (error) {
-      console.log("LikePostError", error);
+      console.log("commentOnPost", error);
       throw error;
       return null;
     }
