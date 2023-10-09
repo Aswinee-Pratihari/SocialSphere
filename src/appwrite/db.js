@@ -83,15 +83,16 @@ export class Database {
     }
   }
 
-  async commentOnPost(postId, { userId, name, comment }) {
-    console.log(userId, name, comment);
+  async commentOnPost(postId, data) {
+    // console.log(userId, name, comment);
     try {
       return await this.databases.updateDocument(
         conf.appwrite_database_id,
         conf.appwrite_post_collection_id,
         postId,
         "comments",
-        [userId, name, comment]
+        data
+        // [userId, name, comment]
       );
     } catch (error) {
       console.log("commentOnPost", error);
