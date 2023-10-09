@@ -83,6 +83,23 @@ export class Database {
     }
   }
 
+  async commentOnPost(postId, comments) {
+    try {
+      return await this.databases.updateDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_post_collection_id,
+        postId,
+        {
+          comments,
+        }
+      );
+    } catch (error) {
+      console.log("LikePostError", error);
+      throw error;
+      return null;
+    }
+  }
+
   async deletePost(Image) {
     try {
       await this.databases.deleteDocument(

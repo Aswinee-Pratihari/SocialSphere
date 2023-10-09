@@ -22,14 +22,15 @@ const PostCard = ({ post, name }) => {
         await database.LikePost(post.$id, post.likes);
         setIsLiked(true);
         setLikePost(true);
+        console.log(post.likes);
         toast.success("Post Liked");
       } else {
         post.likes = post.likes.filter((id) => id != userId);
+        await database.LikePost(post.$id, post.likes);
         setIsLiked(false);
         setLikePost(false);
         toast.success("Post disliked");
-
-        await database.LikePost(post.$id, post.likes);
+        console.log(post.likes);
       }
     } catch (error) {
       toast.error(error.message) || toast.error(error);
@@ -93,9 +94,7 @@ const PostCard = ({ post, name }) => {
 
         {/* buttons for like and comment */}
         <div className="flex gap-4 items-center">
-          <span>
-            {likePost ? post?.likes?.length : post?.likes?.length - 1} Likes
-          </span>
+          <span>{likePost && post?.likes?.length} Likes</span>
           <div className="flex items-center gap-2">
             {isLiked ? (
               <>
@@ -144,6 +143,9 @@ const PostCard = ({ post, name }) => {
               postImg={photos.filePreview(post.Image)}
               caption={post?.caption}
               openCommentBox={setOpenComment}
+              name={post?.users?.name || name}
+              userId={userId}
+              postId={post.$id}
             />
           )}
         </div>
