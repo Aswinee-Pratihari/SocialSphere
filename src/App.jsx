@@ -7,10 +7,11 @@ import Loader from "./components/Loader";
 import authService from "./appwrite/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut, login } from "./redux/authSlice";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar";
 import AuthLayout from "./components/AuthLayout";
 import BottomBar from "./components/BottomBar";
+
 import { ToastBar, Toaster } from "react-hot-toast";
 
 function App() {
@@ -20,7 +21,15 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+  const location = useLocation();
+
   useEffect(() => {
+    localStorage.setItem("lastVisitedRoute", location.pathname);
+    const lastVisitedRoute = localStorage.getItem("lastVisitedRoute");
+    if (lastVisitedRoute && lastVisitedRoute !== location.pathname) {
+      // Redirect to the last visited route
+      navigate(lastVisitedRoute);
+    }
     const fetchUser = async () => {
       try {
         const user = await authService.getUser();
@@ -28,7 +37,6 @@ function App() {
         if (user != null) {
           setUser(user);
           dispatch(login(user));
-          navigate("/");
         } else {
           dispatch(logOut());
           navigate("/login");
@@ -40,7 +48,7 @@ function App() {
     };
 
     fetchUser();
-  }, []);
+  }, [location, navigate]);
 
   return (
     <>

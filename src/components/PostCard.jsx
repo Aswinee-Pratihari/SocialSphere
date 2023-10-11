@@ -50,11 +50,19 @@ const PostCard = ({ post, name }) => {
             to={`/profile/${post?.userId}`}
             className="top flex items-center gap-3"
           >
-            <img
-              src={database.getAvatar(post?.users?.name)?.href}
-              alt=""
-              className="w-10 h-10 rounded-full"
-            />
+            {post.userId !== userId ? (
+              <img
+                src={database.getAvatar(post?.users?.name || name)?.href}
+                alt=""
+                className="w-10 h-10 rounded-full"
+              />
+            ) : (
+              <img
+                src={database.getAvatar(post?.users?.name)?.href}
+                alt=""
+                className="w-10 h-10 rounded-full"
+              />
+            )}
             <div>
               <h5 className="text-sm font-semibold">
                 {post?.users?.name || name}

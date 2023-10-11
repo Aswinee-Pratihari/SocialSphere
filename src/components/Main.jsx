@@ -4,15 +4,43 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Input, Modal, PostCard } from "./index";
 import { useSelector } from "react-redux";
 import database from "../appwrite/db";
+import conf from "../conf/conf";
+import Shimmer from "./Shimmer";
 const Main = () => {
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.auth.user);
   const [OpenModal, setOpenModal] = useState(false);
   useEffect(() => {
     const fetchPost = async () => {
+      setLoading(true);
       const res = await database.getAllPost();
       setPost(res?.documents);
+      setLoading(false);
     };
+
+    database.client.subscribe(
+      `databases.${conf.appwrite_database_id}.collections.${conf.appwrite_post_collection_id}.documents`,
+      (response) => {
+        if (
+          response.events.includes(
+            "databases.*.collections.*.documents.*.create"
+          )
+        ) {
+          fetchPost();
+        }
+        if (
+          response.events.includes(
+            "databases.*.collections.*.documents.*.delete"
+          )
+        ) {
+          setPost((prevState) =>
+            prevState.filter((post) => post.$id !== response.payload.$id)
+          );
+        }
+      }
+    );
+
     fetchPost();
   }, []);
   return (
@@ -46,7 +74,7 @@ const Main = () => {
         />
       </div>
       {/* reating post card */}
-
+      {loading && <Shimmer />}
       <div className="space-y-4">
         {post &&
           post?.map((singlePost) => {
