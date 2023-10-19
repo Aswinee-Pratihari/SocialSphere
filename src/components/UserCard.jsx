@@ -7,7 +7,7 @@ import database from "../appwrite/db";
 const UserCard = ({ name, email, id, followers }) => {
   const user = useSelector((state) => state.auth.user);
   const [isFollowing, setIsFollowing] = useState(
-    followers.indexOf(user?.$id) !== -1
+    followers?.indexOf(user?.$id) !== -1
   );
 
   const handlefollow = async () => {

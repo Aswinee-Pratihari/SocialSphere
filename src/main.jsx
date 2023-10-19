@@ -12,8 +12,10 @@ import {
   Profile,
   LikedPostPage,
 } from "./pages/index.js";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import AuthLayout from "./components/AuthLayout.jsx";
+import ChatApp from "./pages/ChatPage.jsx";
+import UserList from "./pages/UserList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -68,13 +70,27 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
+      {
+        path: "/chat",
+        element: (
+          <AuthLayout authentication={true}>
+            <UserList />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/chat/:id",
+        element: (
+          <AuthLayout authentication={true}>
+            <ChatApp />
+          </AuthLayout>
+        ),
+      },
     ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 );

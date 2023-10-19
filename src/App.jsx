@@ -59,8 +59,12 @@ function App() {
           <div className="flex  justify-center">
             {authStatus && (
               <>
-                <div className="flex-1 sm:block hidden">
-                  <SideBar />
+                <div
+                  className={`${
+                    location.pathname !== "/chat" && "flex-1"
+                  } sm:block hidden`}
+                >
+                  <SideBar lastVisitedRoute={location.pathname} />
                 </div>
 
                 <div className="fixed bg-gray-200 rounded-md shadow-md bottom-0  sm:hidden block w-full">

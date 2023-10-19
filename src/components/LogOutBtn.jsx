@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 import { logOut } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
-const LogOutBtn = () => {
+const LogOutBtn = ({ lastVisitedRoute }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogOut = () => {
@@ -19,7 +19,13 @@ const LogOutBtn = () => {
       onClick={handleLogOut}
     >
       <ArrowLeftOnRectangleIcon className="w-6 h-6" />
-      <h4 className="block max-md:hidden">LogOut</h4>
+      <h4
+        className={`block ${
+          lastVisitedRoute == "/chat" ? "hidden" : " max-md:hidden"
+        }`}
+      >
+        LogOut
+      </h4>
     </button>
   );
 };

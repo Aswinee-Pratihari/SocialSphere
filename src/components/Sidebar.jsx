@@ -5,11 +5,12 @@ import {
   MagnifyingGlassIcon,
   UserIcon,
   HandThumbUpIcon,
+  ChatBubbleLeftEllipsisIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { LogOutBtn } from "./index";
-const SideBar = () => {
+const SideBar = ({ lastVisitedRoute }) => {
   const userDetails = useSelector((state) => state.auth);
   const authStatus = userDetails.status;
   const userId = userDetails?.user?.$id;
@@ -31,15 +32,26 @@ const SideBar = () => {
       name: "Liked Post",
     },
     {
+      icon: <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />,
+      slug: `/chat`,
+      name: "Chat",
+    },
+    {
       icon: <UserIcon className="w-6 h-6" />,
       slug: `/profile/${userId}`,
       name: "Profile",
     },
   ];
   return (
-    <div className="bg-white p-4 h-screen fixed top-0 bottom-0 w-[200px] max-md:w-[90px] max-sm:[50px]">
+    <div
+      className={`bg-white p-4 h-screen fixed top-0 bottom-0 ${
+        !lastVisitedRoute && "w-[200px]"
+      } max-md:w-[90px] max-sm:[50px]`}
+    >
       <div className="flex flex-col gap-4 items-start  w-full  h-full">
-        <h1 className="font-bold text-2xl block max-md:hidden">SOCIALS</h1>
+        <h1 className={`font-bold text-2xl block ${" max-md:hidden"}`}>
+          SOCIALS
+        </h1>
         <div className="flex flex-col gap-6 items-start  h-full  w-full">
           {navItems?.map((item) => {
             return (
@@ -49,11 +61,13 @@ const SideBar = () => {
                 key={item?.name}
               >
                 {item?.icon}
-                <h4 className="block max-md:hidden">{item?.name}</h4>
+                <h4 className={`block max-md:hidden ${" max-md:hidden"}`}>
+                  {item?.name}
+                </h4>
               </Link>
             );
           })}
-          {authStatus && <LogOutBtn />}
+          {authStatus && <LogOutBtn lastVisitedRoute={lastVisitedRoute} />}
         </div>
       </div>
     </div>

@@ -11,6 +11,12 @@ const conf = {
   appwrite_user_collection_id: String(
     import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID
   ),
+  appwrite_chat_collection_id: String(
+    import.meta.env.VITE_APPWRITE_CHATS_COLLECTION_ID
+  ),
+  appwrite_messsages_collection_id: String(
+    import.meta.env.VITE_APPWRITE_MESSAGES_COLLECTION_ID
+  ),
 };
 
 export default conf;

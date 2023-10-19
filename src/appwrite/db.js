@@ -205,6 +205,65 @@ export class Database {
       throw error;
     }
   }
+
+  async getChat(firstId, secondId) {
+    console.log("get chat executed");
+    try {
+      return await this.databases.getDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_chat_collection_id,
+        firstId + secondId
+      );
+    } catch {
+      try {
+        return await this.databases.getDocument(
+          conf.appwrite_database_id,
+          conf.appwrite_chat_collection_id,
+          secondId + firstId
+        );
+      } catch (error) {
+        console.log("getChatError", error);
+        return null;
+      }
+    }
+  }
+
+  async createChat(combinedId, currentUserId, otherUserId) {
+    console.log("create chat executed");
+    try {
+      return await this.databases.createDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_chat_collection_id,
+        combinedId,
+        {
+          users: [currentUserId, otherUserId],
+        }
+      );
+    } catch (error) {
+      console.log("createChatError", error);
+      throw error;
+      return null;
+    }
+  }
+
+  async createMessage(chatId, userId, body) {
+    try {
+      return await this.databases.createDocument(
+        conf.appwrite_database_id,
+        conf.appwrite_messsages_collection_id,
+        ID.unique(),
+        {
+          chatId,
+          userId,
+          body,
+        }
+      );
+    } catch (error) {
+      console.log("createMessageError", error);
+      throw error;
+      return null;
+    }
+  }
 }
 
 const database = new Database();

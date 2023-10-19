@@ -93,7 +93,7 @@ const PostCard = ({ post, name }) => {
             <img
               // src={post?.img}
               src={photos.filePreview(post.Image)}
-              className="max-w max-h-[300px]  rounded-lg object-cover mx-auto"
+              className=" sm:w-auto aspect-auto sm:max-h-[500px] w-full md:w-auto   sm:rounded-lg object-cover mx-auto"
               alt=""
               loading="lazy"
             />
